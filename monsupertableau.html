@@ -3,6 +3,7 @@
     
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style type="text/css">
         table {
             border-collapse: collapse;
@@ -505,7 +506,8 @@
     </table>
 
 <script>
-//let clickElements = [];
+        /*
+   //let clickElements = [];
 //let elements = document.getElementsByTagName("tr");
 //let selectionText = document.getElementById("selection");
 
@@ -568,11 +570,54 @@
         element.addEventListener("mouseover", function () {this.style.border = "1px solid #888";});
  	 element.addEventListener("mouseout", function () {this.style.border = "";});
     } 
+    */
 
-    });
-}
-function(){}
-</script>
+
+
+ //   ;
+ function refreshSelectionText(count){
+        if(count > 1)
+            $("#selection").text(count + " éléments sélectionnés");
+        else 
+            $("#selection").text(count + " élément sélectionné");        
+    }
+        
+    function changeStyle(element, backgroundColor, fontWeight, border){
+        if(backgroundColor!== null){
+            $(element).css("background-color", backgroundColor);
+        }
+        if(fontWeight !== null){
+            $(element).css("font-weight", fontWeight);
+        }
+        if(border !== null){
+            $(element).css("border", border);
+        }
+    }
+
+    let clickElements = [];
+     
+    $("tr").on("click",function(){
+        let target = this;
+        let targetIndex = clickElements.indexOf(target);
+        if(targetIndex === -1){
+            changeStyle(target, "lightblue", "900", null);
+            clickElements.push(target);
+            refreshSelectionText(clickElements.length);
+        }
+        else{
+            changeStyle(target, "white", "500", null);
+            clickElements.splice(targetIndex,1);
+            refreshSelectionText(clickElements.length);
+        }
+    }).on("mouseover", function(){
+        changeStyle(this, null, null, "1px solid #888");
+    }).on("mouseout", function(){
+        changeStyle(this, null, null, "");       
+    });        
+
+
+
+//</script>
 
 
 </body>
