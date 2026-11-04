@@ -505,39 +505,73 @@
     </table>
 
 <script>
-let clickElements = [];
-let elements = document.getElementsByTagName("tr");
-let selectionText = document.getElementById("selection");
+//let clickElements = [];
+//let elements = document.getElementsByTagName("tr");
+//let selectionText = document.getElementById("selection");
 
-for(let i = 0;i<elements.length;i++){
-    let element = elements[i];
-    element.addEventListener("click", function(event){
-        element.addEventListener("mouseover", function () {this.style.border = "1px solid #888";});
-     element.addEventListener("mouseout", function () {this.style.border = "";});
+//for(let i = 0;i<elements.length;i++){
+   // let element = elements[i];
+   // element.addEventListener("click", function(event){
+   //     element.addEventListener("mouseover", function () {this.style.border = "1px solid #888";});
+   //  element.addEventListener("mouseout", function () {this.style.border = "";});
 
         
-        let target = this;
-        let targetIndex = clickElements.indexOf(target);
-        if(targetIndex === -1){
-            target.style.backgroundColor="lightblue";
-            target.style.fontWeight = "900";
-            clickElements.push(target);
-            if(clickElements.length > 1)
+     //   let target = this;
+      //  let targetIndex = clickElements.indexOf(target);
+       // if(targetIndex === -1){
+        //    target.style.backgroundColor="lightblue";
+        //    target.style.fontWeight = "900";
+        //    clickElements.push(target);
+        //    if(clickElements.length > 1)
                 selectionText.innerText = clickElements.length+" éléments sélectionnés";
-            else
+         //   else
                 selectionText.innerText = clickElements.length+" élément sélectionné";
-        }
-        else{
-            target.style.backgroundColor="white";
-            target.style.fontWeight = "500";
-            clickElements.splice(targetIndex,1);
-            if(clickElements.length > 1)
-                selectionText.innerText = clickElements.length+" éléments sélectionnés";
-            else
-                selectionText.innerText = clickElements.length+" élément sélectionné";
-        }
+       // }
+     //   else{
+      //      target.style.backgroundColor="white";
+     //       target.style.fontWeight = "500";
+      //      clickElements.splice(targetIndex,1);
+      //      if(clickElements.length > 1)
+      //          selectionText.innerText = clickElements.length+" éléments sélectionnés";
+      //      else
+      //          selectionText.innerText = clickElements.length+" élément sélectionné";
+      //  }
+      let clickElements = [];
+    let elements = document.getElementsByTagName("tr");
+       
+    function refreshSelectionText(count) {
+        let selectionText = document.getElementById("selection"); // On met cette ligne dans la fonction, car selectionText est nécessaire dans la fonction seulement
+        if(count > 1)
+            selectionText.innerText = count + " éléments sélectionnés";
+        else
+            selectionText.innerText = count + " élément sélectionné";
+    }	
+    
+    for(let i = 0;i<elements.length;i++){
+        let element = elements[i];
+        element.addEventListener("click", function(event){
+            let target = this;
+            let targetIndex = clickElements.indexOf(target);
+            if(targetIndex === -1){
+                target.style.backgroundColor="lightblue";
+                target.style.fontWeight = "900";
+                clickElements.push(target);
+                refreshSelectionText(clickElements.length);
+           }
+           else{
+                target.style.backgroundColor="white";
+                target.style.fontWeight = "500";
+                clickElements.splice(targetIndex,1);
+                refreshSelectionText(clickElements.length);
+           }
+        });
+        element.addEventListener("mouseover", function () {this.style.border = "1px solid #888";});
+ 	 element.addEventListener("mouseout", function () {this.style.border = "";});
+    } 
+
     });
 }
+function(){}
 </script>
 
 
